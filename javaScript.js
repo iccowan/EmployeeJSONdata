@@ -46,7 +46,21 @@ var facultyNonTable = function(employees) {
       .selectAll("div")
       .data(employees)
       .enter()
-      .append("div").classed("employee", true);
+      .append("div").classed("employee not-clicked", true).on("click",function(){
+          var thisEmployee = d3.select(this);
+          if(thisEmployee.classed("clicked"))
+              return;
+          else
+              thisEmployee.classed("unclicked", false).classed("clicked", true);
+        employeeDetail = d3.select(this).append("div")
+      .classed("detail", true);
+    
+    employeeDetail.append("span").classed("title", true).text(function(employee){return employee.title});
+    employeeDetail.append("span").classed("department", true).text(function(employee){return employee.unit});
+    employeeDetail.append("span").classed("email", true).text(function(employee){return employee.email});
+    employeeDetail.append("p").classed("bio", true).text(function(employee){return employee.bio});
+    console.log("clicked");
+});
     
     employeeHead = cards.append("div")
       .classed("general", true);
@@ -54,11 +68,6 @@ var facultyNonTable = function(employees) {
     employeeHead.append("span").classed("eName", true).text(function(employee){return employee.firstName + " " + employee.lastName});
     employeeHead.append("img").attr("src", function(employee){return employee.photo});
     
-    employeeDetail = cards.append("div")
-      .classed("detail", true);
-    
-    employeeDetail.append("span").classed("title", true).text(function(employee){return employee.title});
-    employeeDetail.append("span").classed("department", true).text(function(employee){return employee.unit});
-    employeeDetail.append("span").classed("email", true).text(function(employee){return employee.email});
-    employeeDetail.append("p").classed("bio", true).text(function(employee){return employee.bio});
 }
+
+
