@@ -1,0 +1,35 @@
+body {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.employee {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 5px 5px 10px;
+    
+    width: 100%;
+    overflow: auto;
+}
+
+.general {
+    float: left;
+    margin-right: 20px;
+}
+
+span {
+    display: block;
+}
+
+.eName, .title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+img {
+    height: 200px;
+}
