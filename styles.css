@@ -16,6 +16,14 @@ body {
     overflow: auto;
 }
 
+.not-clicked{
+    width: 200px;
+}
+
+.clicked{
+    width:auto;
+}
+
 .general {
     float: left;
     margin-right: 20px;
