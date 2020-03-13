@@ -1,12 +1,15 @@
+// Get the faculty information
 var facultyPromise = d3.json("employee.json")
 facultyPromise.then(
 function(employees){createTables(employees)},function(err){console.log("failed:",err)});
 
+// Creates information as necessary
 var createTables = function(employees) {
     facultyTable(employees);
     facultyNonTable(employees);
 }
 
+// Create the table
 var facultyTable = function(employees)
 {
     var rows = d3.select("#facultyTable tbody")
@@ -15,6 +18,7 @@ var facultyTable = function(employees)
       .enter()
       .append("tr");
     
+    // Repetitive, but no way to shorten
     rows.append("td")
     .text(function(employee){return employee.firstName})
     
@@ -42,26 +46,31 @@ var facultyTable = function(employees)
 }
 
 var facultyNonTable = function(employees) {
+    // Create the employee cards and add an event listener
     var cards = d3.select("#employeeCards")
       .selectAll("div")
       .data(employees)
       .enter()
-      .append("div").classed("employee not-clicked", true).on("click",function(){
+      .append("div").classed("employee not-clicked", true).on("click", function(){
+          // Select this employee
           var thisEmployee = d3.select(this);
-          if(thisEmployee.classed("clicked"))
-              return;
-          else
-              thisEmployee.classed("unclicked", false).classed("clicked", true);
-        employeeDetail = d3.select(this).append("div")
-      .classed("detail", true);
+          
+          // If the employee has been clicked, hide their details
+          // If the employee has not been clicked, show their details
+          if(thisEmployee.classed("clicked")) {
+              thisEmployee.classed("not-clicked", true).classed("clicked", false);
+              thisEmployee.select(".detail").remove();
+          } else {
+              thisEmployee.classed("not-clicked", false).classed("clicked", true);
+              employeeDetail = d3.select(this).append("div").classed("detail", true);
+              employeeDetail.append("span").classed("title", true).text(function(employee){return employee.title});
+              employeeDetail.append("span").classed("department", true).text(function(employee){return employee.unit});
+              employeeDetail.append("span").classed("email", true).text(function(employee){return employee.email});
+              employeeDetail.append("p").classed("bio", true).text(function(employee){return employee.bio});
+          }
+      });
     
-    employeeDetail.append("span").classed("title", true).text(function(employee){return employee.title});
-    employeeDetail.append("span").classed("department", true).text(function(employee){return employee.unit});
-    employeeDetail.append("span").classed("email", true).text(function(employee){return employee.email});
-    employeeDetail.append("p").classed("bio", true).text(function(employee){return employee.bio});
-    console.log("clicked");
-});
-    
+    // Append the base information
     employeeHead = cards.append("div")
       .classed("general", true);
     
